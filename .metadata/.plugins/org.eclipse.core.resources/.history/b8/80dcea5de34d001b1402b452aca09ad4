@@ -43,7 +43,7 @@ int main(void)
 
 
     uint16_t value;
-    uint16_t state_I2C = 1;
+    uint16_t state_I2C = 0;
 
 	for(;;)
 	{
@@ -51,111 +51,70 @@ int main(void)
 
 		switch (state_I2C)
 		{
-			case 0:
-			{
+		case 0:
+		{
 
-			} break;
+		} break;
 
-			case 1:
-			{
-				I2C_AcknowledgeConfig(I2C_PORT,ENABLE); // Enable I2C acknowledgment
-				I2C_GenerateSTART(I2C_PORT,ENABLE);
+		case 1:
+		{
+			I2C_AcknowledgeConfig(I2C_PORT,ENABLE); // Enable I2C acknowledgment
+			I2C_GenerateSTART(I2C_PORT,ENABLE);
 
-				state_I2C = 2;
+			state_I2C = 2;
 
-			} break;
+		} break;
 
-			case 2:
-			{
-				while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_MODE_SELECT)); 								// Wait for EV5
-				state_I2C = 3;
+		case 2:
+		{
+			while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_MODE_SELECT)); 								// Wait for EV5
+			state_I2C = 3;
 
-			} break;
+		} break;
 
-			case 3:
-			{
-				I2C_Send7bitAddress(I2C_PORT,LM75_ADDR1,I2C_Direction_Transmitter); 							// Send slave address
-				state_I2C = 4;
-			} break;
+		case 3:
+		{
 
-			case 4:
-			{
-				while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED)); 					// Wait for EV6
-				state_I2C = 5;
-			} break;
+		} break;
 
-			case 5:
-			{
-				I2C_SendData(I2C_PORT,LM75_REG_TEMP); 															// Send register address
-				state_I2C = 6;
-			} break;
+		case 4:
+		{
 
-			case 6:
-			{
-				while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_BYTE_TRANSMITTED)); 							// Wait for EV8
-				state_I2C = 7;
-			} break;
+		} break;
 
-			case 7:
-			{
-				I2C_GenerateSTART(I2C_PORT,ENABLE); 															// Send repeated START condition (aka Re-START)
-				state_I2C = 8;
-			} break;
+		case 5:
+		{
 
-			case 8:
-			{
-				while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_MODE_SELECT)); 								// Wait for EV5
-				state_I2C = 9;
-			} break;
+		} break;
 
-			case 9:
-			{
-				I2C_Send7bitAddress(I2C_PORT,LM75_ADDR1,I2C_Direction_Receiver); 								// Send slave address for READ
-				state_I2C = 10;
-			} break;
+		case 6:
+		{
 
-			case 10:
-			{
-				while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED)); 						// Wait for EV6
-				state_I2C = 11;
-			} break;
+		} break;
 
-			case 11:
-			{
-				while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_BYTE_RECEIVED)); 								// Wait for EV7 (Byte received from slave)
-				state_I2C = 12;
-			} break;
+		case 7:
+		{
 
-			case 12:
-			{
-				value = (I2C_ReceiveData(I2C_PORT) << 8); 														// Receive high byte
-				I2C_AcknowledgeConfig(I2C_PORT,DISABLE); 														// Disable I2C acknowledgment
-				I2C_GenerateSTOP(I2C_PORT,ENABLE); 																// Send STOP condition
-
-				state_I2C = 13;
-			} break;
-
-			case 13:
-			{
-				while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_BYTE_RECEIVED)); 								// Wait for EV7 (Byte received from slave)
-				state_I2C = 14;
-			} break;
-
-			case 14:
-			{
-				value |= I2C_ReceiveData(I2C_PORT); 															// Receive low byte
-
-				state_I2C = 0;
-			} break;
-
+		} break;
 		} // скобка свича
 
 
 
 
-
-
-
+		I2C_Send7bitAddress(I2C_PORT,LM75_ADDR1,I2C_Direction_Transmitter); 							// Send slave address
+		while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED)); 					// Wait for EV6
+		I2C_SendData(I2C_PORT,LM75_REG_TEMP); 															// Send register address
+		while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_BYTE_TRANSMITTED)); 							// Wait for EV8
+		I2C_GenerateSTART(I2C_PORT,ENABLE); 															// Send repeated START condition (aka Re-START)
+		while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_MODE_SELECT)); 								// Wait for EV5
+		I2C_Send7bitAddress(I2C_PORT,LM75_ADDR1,I2C_Direction_Receiver); 								// Send slave address for READ
+		while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED)); 						// Wait for EV6
+		while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_BYTE_RECEIVED)); 								// Wait for EV7 (Byte received from slave)
+		value = (I2C_ReceiveData(I2C_PORT) << 8); 														// Receive high byte
+		I2C_AcknowledgeConfig(I2C_PORT,DISABLE); 														// Disable I2C acknowledgment
+		I2C_GenerateSTOP(I2C_PORT,ENABLE); 																// Send STOP condition
+		while (!I2C_CheckEvent(I2C_PORT,I2C_EVENT_MASTER_BYTE_RECEIVED)); 								// Wait for EV7 (Byte received from slave)
+		value |= I2C_ReceiveData(I2C_PORT); 															// Receive low byte
 
 
 
