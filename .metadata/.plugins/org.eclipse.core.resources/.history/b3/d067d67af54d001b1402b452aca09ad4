@@ -21,24 +21,18 @@
 unsigned short reg_i2c		= LM75_REG_TEMP;
 unsigned short addr_i2c		= LM75_ADDR1;
 
-unsigned short count_termometr;
-
 unsigned short temper_plate;
 unsigned short temper_1;
 unsigned short temper_2;
 
 
-// прототипы
+
 void I2C1_init(void);
 uint16_t LM75_ReadReg(uint8_t reg, uint8_t LM75_Address);
 int16_t LM75_Temperature(uint8_t LM75_Address);
 void LM75_Shutdown(FunctionalState newstate, uint8_t LM75_Address);
 void LM75_WriteConf(uint8_t value, uint8_t LM75_Address);
 uint8_t LM75_ReadConf(uint8_t LM75_Address);
-
-
-
-
 
 
 
@@ -58,9 +52,6 @@ int main(void)
 
     uint16_t value;
     uint16_t state_I2C = 1;
-
-    count_termometr  = 0;
-
 
 	for(;;)
 	{
@@ -190,44 +181,6 @@ int main(void)
 				}
 
 				value = temp;
-
-
-
-
-
-
-
-				if(count_termometr == 0)
-				{
-					temper_plate = value;
-					addr_i2c = LM75_ADDR2;
-
-				}
-
-				if(count_termometr == 1)
-				{
-					temper_1 = value;
-					addr_i2c = LM75_ADDR3;
-
-				}
-
-				if(count_termometr == 2)
-				{
-					temper_2 = value;
-					addr_i2c = LM75_ADDR1;
-
-				}
-
-
-
-				if(count_termometr < 2)
-				{
-					count_termometr++;
-				}
-				else
-				{
-					count_termometr = 0;
-				}
 
 				state_I2C = 1;
 			} break;

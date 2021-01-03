@@ -1,4 +1,4 @@
-19:47:29 **** Incremental Build of configuration Debug for project STM32_I2C_master ****
+22:04:51 **** Incremental Build of configuration Debug for project STM32_I2C_master ****
 make -j4 all 
 Building file: ../src/main.c
 Invoking: MCU GCC Compiler
@@ -16,11 +16,8 @@ Generating binary and Printing size information:
 arm-none-eabi-objcopy -O binary "STM32_I2C_master.elf" "STM32_I2C_master.bin"
 arm-none-eabi-size "STM32_I2C_master.elf"
    text	   data	    bss	    dec	    hex	filename
-   4324	   1104	   1092	   6520	   1978	STM32_I2C_master.elf
+   4612	   1104	   1100	   6816	   1aa0	STM32_I2C_master.elf
  
-19:47:36 **** Incremental Build of configuration Debug for project STM32_I2C_master ****
-make -j4 all 
-make: Nothing to be done for 'all'.
-19:50:08 **** Incremental Build of configuration Debug for project STM32_I2C_master ****
+22:04:54 **** Incremental Build of configuration Debug for project STM32_I2C_master ****
 make -j4 all 
 make: Nothing to be done for 'all'.

@@ -194,38 +194,24 @@ int main(void)
 
 
 
-
-
-
 				if(count_termometr == 0)
 				{
 					temper_plate = value;
 					addr_i2c = LM75_ADDR2;
-
+					count_termometr = 1;
 				}
 
 				if(count_termometr == 1)
 				{
 					temper_1 = value;
 					addr_i2c = LM75_ADDR3;
-
+					count_termometr = 2;
 				}
 
 				if(count_termometr == 2)
 				{
 					temper_2 = value;
 					addr_i2c = LM75_ADDR1;
-
-				}
-
-
-
-				if(count_termometr < 2)
-				{
-					count_termometr++;
-				}
-				else
-				{
 					count_termometr = 0;
 				}
 
