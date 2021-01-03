@@ -1,6 +1,6 @@
-22:04:54 **** Incremental Build of configuration Debug for project STM32_I2C_master ****
+01:15:42 **** Incremental Build of configuration Debug for project STM32_I2C_master ****
 make -j4 all 
 make: Nothing to be done for 'all'.
 
-22:04:55 Build Finished (took 418ms)
+01:15:42 Build Finished (took 478ms)
 

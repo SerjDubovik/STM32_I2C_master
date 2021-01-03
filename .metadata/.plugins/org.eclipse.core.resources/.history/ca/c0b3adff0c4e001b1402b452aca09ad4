@@ -205,25 +205,23 @@ int main(void)
 
 				if(count_termometr == 0)
 				{
-					array_mb[8]++;								// счётчик проверки состояния связи
-
-					array_mb[9] = value;
 					temper_plate = value;
 					addr_i2c = LM75_ADDR2;
+
 				}
 
 				if(count_termometr == 1)
 				{
-					array_mb[10] = value;
 					temper_1 = value;
 					addr_i2c = LM75_ADDR3;
+
 				}
 
 				if(count_termometr == 2)
 				{
-					array_mb[11] = value;
 					temper_2 = value;
 					addr_i2c = LM75_ADDR1;
+
 				}
 
 
@@ -245,7 +243,7 @@ int main(void)
 
 
 
-
+		array_mb[8]++;								// счётчик проверки состояния связи
 
 		Modbus_slave();
 

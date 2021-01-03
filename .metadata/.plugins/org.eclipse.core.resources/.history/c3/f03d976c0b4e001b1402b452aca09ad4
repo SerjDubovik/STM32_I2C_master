@@ -1,7 +1,5 @@
 #include "stm32f10x.h"
 #include "GPIO.h"
-#include "modbus.h"
-
 
 
 #define I2C_PORT         I2C1
@@ -18,9 +16,6 @@
 #define LM75_REG_CONF                 0x01 // Configuration
 #define LM75_REG_THYS                 0x02 // Hysteresis
 #define LM75_REG_TOS                  0x03 // Overtemperature shutdown
-
-
-unsigned short	array_mb[100]						= {};			// массив для хранения принятых/переданных слов
 
 
 unsigned short reg_i2c		= LM75_REG_TEMP;
@@ -51,7 +46,6 @@ int main(void)
 {
 
 	init_GPIO();
-    init_modbus();
 
     relay_1(off);
     relay_2(off);
@@ -205,25 +199,23 @@ int main(void)
 
 				if(count_termometr == 0)
 				{
-					array_mb[8]++;								// счётчик проверки состояния связи
-
-					array_mb[9] = value;
 					temper_plate = value;
 					addr_i2c = LM75_ADDR2;
+
 				}
 
 				if(count_termometr == 1)
 				{
-					array_mb[10] = value;
 					temper_1 = value;
 					addr_i2c = LM75_ADDR3;
+
 				}
 
 				if(count_termometr == 2)
 				{
-					array_mb[11] = value;
 					temper_2 = value;
 					addr_i2c = LM75_ADDR1;
+
 				}
 
 
@@ -247,7 +239,23 @@ int main(void)
 
 
 
-		Modbus_slave();
+
+
+
+
+
+
+
+	    /*
+	    int16_t temp1 = LM75_Temperature(LM75_ADDR1);
+		//LM75_Shutdown(DISABLE,LM75_ADDR1);
+
+		int16_t temp2 = LM75_Temperature(LM75_ADDR2);
+		//LM75_Shutdown(DISABLE,LM75_ADDR2);
+
+		int16_t temp3 = LM75_Temperature(LM75_ADDR3);
+		//LM75_Shutdown(DISABLE,LM75_ADDR3);
+	    */
 
 	} // скобка бесконечного цикла
 

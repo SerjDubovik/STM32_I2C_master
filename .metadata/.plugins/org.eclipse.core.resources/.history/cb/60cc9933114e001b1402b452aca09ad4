@@ -247,7 +247,7 @@ int main(void)
 
 
 
-		Modbus_slave();
+//		Modbus_slave();
 
 	} // скобка бесконечного цикла
 
