@@ -197,10 +197,9 @@ int main(void)
 
 				value = temp;
 
+				array_mb[8]++;								// счётчик проверки состояния связи
+
 				array_mb[9] = value;
-
-
-				//LM75_Shutdown(DISABLE,addr_i2c);
 
 
 
@@ -247,9 +246,9 @@ int main(void)
 
 
 
-		array_mb[8]++;								// счётчик проверки состояния связи
 
-		Modbus_slave();
+
+//		Modbus_slave();
 
 	} // скобка бесконечного цикла
 

@@ -197,16 +197,15 @@ int main(void)
 
 				value = temp;
 
-				array_mb[9] = value;
 
 
-				//LM75_Shutdown(DISABLE,addr_i2c);
+
 
 
 
 				if(count_termometr == 0)
 				{
-
+					array_mb[8]++;								// счётчик проверки состояния связи
 
 					array_mb[9] = value;
 					temper_plate = value;
@@ -238,7 +237,6 @@ int main(void)
 					count_termometr = 0;
 				}
 
-
 				state_I2C = 1;
 			} break;
 
@@ -247,7 +245,7 @@ int main(void)
 
 
 
-		array_mb[8]++;								// счётчик проверки состояния связи
+
 
 		Modbus_slave();
 
